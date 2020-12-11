@@ -1,0 +1,30 @@
+{
+  "name": "cse370project",
+  "version": "1.0.0",
+  "description": "A simple online car showroom project built using nodejs and mysql database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayonshafiul/cse370project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayonshafiul/cse370project/issues"
+  },
+  "homepage": "https://github.com/ayonshafiul/cse370project#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
