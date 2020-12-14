@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+html, body {
+    background: white;
+    margin: 0;
+    padding: 0;
+    background: #ffd300;
+    font-family: 'Russo One', Helvetica, sans-serif;
+}
+.nav {
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    background: #1f1f1f;
+    color: #ffd300;
+    text-transform: uppercase;
+    z-index: 1;
+}
+.logo {
+    font-family: 'Russo One';
+    text-align: center;
+    font-size: 2em;
+
+}
+.nav ul {
+    font-family: 'Russo One';
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.nav ul::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.nav ul li {
+    float: left;
+    width: 31.3333%;
+    padding: 1%;
+    text-align: center;
+}
+
+.nav ul li a {
+    display: block;
+    padding: 10px 0px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #ffd300;
+}
+.nav ul li a:hover {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #1f1f1f;
+    background: #ffd300;
+}
+
+.active {
+    border-bottom: 2px solid #ffd300;
+}
+
+
+.container {
+    position: relative;
+    width: 80%;
+    background: #1f1f1f;
+    color: white;
+    margin: 0px auto;
+    padding: 10px;
+    min-height: 1000px;
+}
+
+form div {
+    width: 80%;
+    margin: auto;
+    color: #ffd300;
+}
+
+form div .label {
+    
+    font-family: 'Russo One', Helvetica, sans-serif;
+    text-align: left;
+    margin: 1em 0px;
+}
+
+form div input {
+    width: 100%;
+    border: none;
+    font-family: 'Russo One', Helvetica, sans-serif;
+    background: #ffd300;
+    font-size: 1.2em;
+    border-bottom: 2px solid #ffd300;
+    height: 30px;
+    margin: 1em 0px;
+    padding: 0;
+    display: block;
+}
+form div input:focus {
+   
+}
+form div button {
+    color: #ffd300;
+    font-size: 1.2em;
+    font-family: 'Russo One', Helvetica, sans-serif;
+    display: block;
+    background: none;
+    border: none;
+    width: 100%;
+    padding: .5em 0px;
+    margin: 1em 0px;
+    border: 2px solid #ffd300;
+    text-transform: uppercase;
+}
+
+form div button:hover {
+    background: #ffd300;
+    color: #1f1f1f;
+    cursor: pointer;
+}
