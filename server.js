@@ -80,7 +80,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    res.json(req.body);\
+    res.json(req.body);
     // insert into database
 
 });
