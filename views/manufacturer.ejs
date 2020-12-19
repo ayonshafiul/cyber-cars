@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Cyber Cars</title>
 </head>
 <body>
@@ -16,22 +16,22 @@
         </ul>
     </div>
     <div class="container">
-        <form action="/login" method="POST">
+        <form action="/admin/manufacturer" method="POST">
             <div>
                 <div class="label">
-                    <label for="email">Email</label>
+                    <label for="name">Manufacturer Name</label>
                 </div>
-                <input type="text" id="email" name="email">
+                <input type="text" id="name" name="name">
             </div>
             <div>
                 <div class="label">
-                    <label for="password">Password</label>
+                    <label for="country">Manufacturer Country</label>
                 </div>
-                <input type="password" id="password" name="password">
+                <input type="text" id="country" name="country">
             </div>
 
             <div>
-                <button type="submit">Login</button>
+                <button type="submit">Insert</button>
             </div>
         </form>
     </div>
