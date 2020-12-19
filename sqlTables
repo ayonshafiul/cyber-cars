@@ -10,7 +10,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE manufacturers(
-    manufacturerID int,
+    manufacturerID int AUTO_INCREMENT,
     name varchar(20),
     country varchar(20),
     Primary Key(manufacturerID)

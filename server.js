@@ -37,6 +37,11 @@ app.get("/register", (req, res) => {
     res.render("register");
 });
 
+app.get("/admin/manufacturer", function(req, res) {
+    res.render("manufacturer");
+})
+
+
 app.post('/login', (req, res) => {
     console.log(req.body);
     res.json(req.body);
