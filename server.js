@@ -46,8 +46,32 @@ app.get("/admin/manufacturer/update", function(req, res) {
             res.render('manufacturerList', {data: results});
         }
     });
-})
+});
 
+app.get("/admin/manufacturer/update/:id", function(req, res) {
+    const id = req.params.id;
+    let sql = "SELECT * from manufacturers where manufacturerID = ?";
+    db.query(sql, id, function(error, results, fields) {
+        if (error) {
+            console.log(error);
+        } else {
+            res.render("manufacturerUpdate", {data: results});
+        }
+    })
+
+});
+
+app.post("/admin/manufacturer/update/:id", function(req, res) {
+    let sql = mysql.format("UPDATE manufacturers SET name=?, country=? where manufacturerID=?", [req.body.name, req.body.country, req.params.id]);
+    db.query(sql, function(error, results, fields) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("successfully updated!");
+            res.redirect("/admin/manufacturer/update");
+        }
+    })
+});
 app.get("/admin/manufacturer", function(req, res) {
     res.render("manufacturer");
 })
@@ -82,6 +106,8 @@ app.post('/login', (req, res) => {
 app.post('/register', (req, res) => {
     res.json(req.body);
     // insert into database
+    console.log(req.body);
+    console.log(req.body.name);
 
 });
 

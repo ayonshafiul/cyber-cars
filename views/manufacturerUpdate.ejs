@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <form action="/admin/manufacturer/update/<%= data[0].manufacturerID %>" method="POST">
+            <div>
+                <div class="label">
+                    <label for="name">Manufacturer Name</label>
+                </div>
+                <input type="text" id="name" name="name" value="<%= data[0].name %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="country">Manufacturer Country</label>
+                </div>
+                <input type="text" id="country" name="country" value="<%= data[0].country %>">
+            </div>
+
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
