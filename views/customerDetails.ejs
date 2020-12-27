@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </div>
+    <div class="table-data">
+        <h2>Customer Details</h2>
+        <table border='1'>
+            <tr>
+                <th>userId</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Credit Card Info.</th>
+            </tr>
+
+        
+            <% for(var i = 0; i < data.length; i++) { %>
+                <tr>
+               <td><%= data[i].userID %> </td>
+               <td> <%= data[i].name %> </td>
+                <td> <%= data[i].email %></td>
+                <td> <%= data[i].address %></td>
+                <td> <%= data[i].phoneNumber %></td>
+                <td> <%= data[i].creditCard %></td>
+                <td> <a href="/admin/customerDetails/delete/<%=data[i].userID%>"  Onclick="return ConfirmDelete();">Delete</a></td> 
+                </tr>
+                 <% } %>
+        
+    </table>
+    <script>
+        function ConfirmDelete()
+        {
+          var x = confirm("Are you sure you want to delete?");
+          if (x)
+              return true;
+          else
+            return false;
+        }
+    </script> 
+    </div>
+</body>
+</html>

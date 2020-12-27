@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <form action="/admin/search" method="POST">
+                <label for="searchType"></label>
+                <select id="searchType" name="searchType" onChange="selectChanged()">
+                    <option name="searchType1" value="model">Model</option>
+                    <option value="manufacturer">Manufacturer</option>
+                    <option value="feature">Feature</option>
+                    <option value="price">Price</option>
+                </select>
+            
+            <div id="searchBox">
+                <div class="label">
+                    <label for="search">Search</label>
+                </div>
+                <input type="text" id="search" name="search">
+            </div>
+            
+            <div class="hidden" id="fromDiv">
+                <div class="label">
+                    <label for="search">From</label>
+                </div>
+                <input type="text" id="from" name="from">
+            </div>
+            <div class="hidden" id="toDiv">
+                <div class="label">
+                    <label for="search">To</label>
+                </div>
+                <input type="text" id="to" name="to">
+            </div>
+            <div>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function selectChanged() {
+            var selectElement = document.getElementById("searchType");
+            var selectValue = selectElement.value;
+            if (selectValue == "price") {
+                document.getElementById("searchBox").style.display = "none";
+                document.getElementById("fromDiv").style.display = "block";
+                document.getElementById("toDiv").style.display = "block"; 
+            } else {
+                document.getElementById("searchBox").style.display = "block";
+                document.getElementById("fromDiv").style.display = "none";
+                document.getElementById("toDiv").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

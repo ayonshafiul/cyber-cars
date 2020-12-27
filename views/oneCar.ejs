@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/car">All Cars</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/admin/manufacturerList">Manufacturers</a></li>
+            
+        </ul>
+    </div>
+    <div class="container">
+        <div class="carDetailsContainer">
+            <h1><%=data[0].name%></h1>
+            <h1><%=data[0].model%></h1>
+            <table class="specTable">
+                <tr>
+                    <td>Manufacturer</td>
+                    <td><%=data[0].name%></td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td><%=data[0].model%></td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td><%=data[0].price%></td>
+                </tr>
+                <tr>
+                    <td>Stock</td>
+                    <td><%=data[0].stock%></td>
+                </tr>
+                <tr>
+                    <td>Range</td>
+                    <td><%=data[0].rangeKM%></td>
+                </tr>
+                <tr>
+                    <td>Max Speed</td>
+                    <td><%=data[0].maxSpeed%></td>
+                </tr>
+                <tr>
+                    <td>Autopilot</td>
+                    <td><%=data[0].autoPilot%></td>
+                </tr>
+                <tr>
+                    <td>Cameras</td>
+                    <td><%=data[0].cameras%></td>
+                </tr>
+                <tr>
+                    <td>Engine</td>
+                    <td><%=data[0].engine%></td>
+                </tr>
+            </table>
+            <a href="/message/<%=data[0].carID%>" class="userBtn">Ask for more information</a>
+            <a href="/book/<%=data[0].carID%>" class="userBtn">Book this car now!</a>
+        </div>
+    </div>
+</body>
+</html>

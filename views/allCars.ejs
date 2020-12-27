@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/car">All Cars</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/manufacturer">Manufacturers</a></li>
+            
+        </ul>
+    </div>
+    <div class="container">
+        <div class="carContainer">
+            <% for (var i =0; i < data.length; i++ ) { %>
+                <a href="/car/<%=data[i].carID%>">
+                <div class="car">
+                    <div class="carName"><%= data[i].name %></div>
+                    <div class="carModel"><%= data[i].country %></div>
+                    <span class="carPrice"><%= data[i]. price%></span>
+                    <div class="carSpeed">Stock: <%= data[i].stock %></div>
+                </div>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

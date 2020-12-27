@@ -11,16 +11,22 @@
         <div class="logo">Cyber Cars</div>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a class="active" href="/login">Login</a></li>
+            <li><a  href="/car">All Cars</a></li>
+            <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
+            <li><a class="active" href="/manufacturer">Manufacturers</a></li>
+            
         </ul>
     </div>
     <div class="container">
-        <ul>
-            <% for(var i = 0; i < data.length; i++) { %>
-               <li> <%= data[i].name %> <%= data[i].country %> <a href="/admin/manufacturer/update/<%= data[i].manufacturerID %>">Edit </a><a href="/admin/manufacturer/delete/<%= data[i].manufacturerID %>">Delete</a></li> 
+        <div class="mContainer">
+            <% for (var i =0; i < data.length; i++ ) { %>
+                <div class="manufacturer">
+                    <div class="mName"><%= data[i].name %></div>
+                    <div class="mCountry"><%= data[i].country %></div>
+                </div>
             <% } %>
-        </ul>
+        </div>
     </div>
 </body>
 </html>

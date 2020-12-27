@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <form action="/admin/car/update/<%= data[0].carID %>" method="POST">
+            <div>
+                <div class="label">
+                    <label for="color">Car Color</label>
+                </div>
+                <input type="text" id="color" name="color" value="<%= data[0].color %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="model">Car Model</label>
+                </div>
+                <input type="text" id="model" name="model" value="<%= data[0].model %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="price">Car Price</label>
+                </div>
+                <input type="text" id="price" name="price" value="<%= data[0].price %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="stock">Stock</label>
+                </div>
+                <input type="text" id="stock" name="stock" value="<%= data[0].stock %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="engine">Engine Spec</label>
+                </div>
+                <input type="text" id="engine" name="engine" value="<%= data[0].engine %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="rangeKM">Range in KM</label>
+                </div>
+                <input type="text" id="rangeKM" name="rangeKM" value="<%= data[0].rangeKM %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="braking">Braking System</label>
+                </div>
+                <input type="text" id="braking" name="braking" value="<%= data[0].braking %>">
+            </div>
+
+            <div>
+                <div class="label">
+                    <label for="maxSpeed">Max Speed</label>
+                </div>
+                <input type="text" id="maxSpeed" name="maxSpeed" value="<%= data[0].maxSpeed %>">
+            </div>
+
+            <div>
+                <div class="label">
+                    <label for="autoPilot">Auto Pilot Feature</label>
+                </div>
+                <input type="text" id="autoPilot" name="autoPilot" value="<%= data[0].autoPilot %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="cameras">Cameras option </label>
+                </div>
+                <input type="text" id="cameras" name="cameras" value="<%= data[0].cameras %>">
+            </div>
+            <div>
+                <div class="label">
+                    <label for="manufacturerID">ManufacturerID</label>
+                </div>
+                <input type="text" id="manufacturerID" name="manufacturerID" value="<%= data[0].manufacturerID %>">
+            </div>
+
+            
+
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

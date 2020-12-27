@@ -16,11 +16,25 @@
         </ul>
     </div>
     <div class="container">
-        <ul>
-            <% for(var i = 0; i < data.length; i++) { %>
-               <li> <%= data[i].name %> <%= data[i].country %> <a href="/admin/manufacturer/update/<%= data[i].manufacturerID %>">Edit </a><a href="/admin/manufacturer/delete/<%= data[i].manufacturerID %>">Delete</a></li> 
-            <% } %>
-        </ul>
+        <% let x = ''; %>
+        <% if (id) { %>
+            <%  x = '/' +id;  %>
+        <% } %>
+
+        <form action="/message<%=x%>" method="POST">
+            <div>
+                <div class="label">
+                    <label for="message">Message</label>
+                </div>
+                <input type="text" id="message" name="message">
+            </div>
+            
+
+            <div>
+                <button type="submit">Send Message</button>
+            </div>
+            
+        </form>
     </div>
 </body>
 </html>

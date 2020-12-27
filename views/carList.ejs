@@ -18,7 +18,7 @@
     <div class="container">
         <ul>
             <% for(var i = 0; i < data.length; i++) { %>
-               <li> <%= data[i].name %> <%= data[i].country %> <a href="/admin/manufacturer/update/<%= data[i].manufacturerID %>">Edit </a><a href="/admin/manufacturer/delete/<%= data[i].manufacturerID %>">Delete</a></li> 
+               <li> <%= data[i].color %> <%= data[i].model %> <%= data[i].price %> <%= data[i].stock %> <%= data[i].engine %> <%= data[i].rangeKM %> <%= data[i].braking %> <%= data[i].maxSpeed %> <%= data[i].autoPilot %> <%= data[i].cameras %> <%= data[i].manufacturerID %> <a href="/admin/car/update/<%= data[i].carID %>">Edit </a><a href="/admin/car/delete/<%= data[i].carID %>">Delete</a></li> 
             <% } %>
         </ul>
     </div>

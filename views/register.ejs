@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Cyber Cars</title>
 </head>
+
 <body>
     <div class="nav">
         <div class="logo">Cyber Cars</div>
@@ -21,32 +23,45 @@
                 <div class="label">
                     <label for="name">Name</label>
                 </div>
-                <input type="text" id="name" name="name">
+                <input type="text" id="name" name="name" required>
             </div>
+            <div>
+                <div class="label">
+                    <label for="phone">Phone Number</label>
+                </div>
+                <input type="tel" id="phone" name="phone" pattern="01[0-9]{9}" required>
+            </div>
+
 
             <div>
                 <div class="label">
                     <label for="email">Email</label>
                 </div>
-                <input type="text" id="email" name="email">
+                <input type="email" id="email" name="email" pattern="*@*.*" required>
             </div>
             <div>
                 <div class="label">
                     <label for="password">Password</label>
                 </div>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" required>
             </div>
             <div>
                 <div class="label">
                     <label for="passwordConfirm">Confirm password</label>
                 </div>
-                <input type="password" id="passwordConfirm" name="passwordConfirm">
-            </div>
+                <input type="password" id="passwordConfirm" name="passwordConfirm" required>
 
+            </div>
             <div>
                 <button type="submit">Register</button>
             </div>
-        </form>
+            <h1>
+                <%= data %>
+            </h1>
+    </div>
+    </form>
+
     </div>
 </body>
+
 </html>
