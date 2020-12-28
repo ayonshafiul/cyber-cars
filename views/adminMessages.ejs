@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="table-data">
+            <form action="/admin/message" method="get">
+                <select id="sortType" name="sortType">
+                    <option>Sort by....</option>
+                    <option value="modelasc">Model (A-Z)</option>
+                    <option value="modeldesc">Model (Z-A)</option>
+                    <option value="dateasc">Old->New</option>
+                    <option value="datedesc">New->Old</option>
+                </select>
+                <div>
+                    <button type="submit">Sort</button>
+                </div>
+            </form>
+            <table>
+                <tr>
+                    <th>Message</th>
+                    <th>Car Model</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                <% for(var i = 0; i < data.length; i++) { %>
+                    <tr>
+                    <td> <%= data[i].message %></td>
+                   <td><%= data[i].model %></td>
+                   <td> <%= data[i].date %> </td>
+                    <td><a href="/admin/message/delete/<%=data[i].messageID%>">Delete</a></td>
+                    </tr>
+                <% } %>
+        </table>
+        </div>
+    </div>
+    
+</body>
+<script>
+    function ConfirmDelete()
+    {
+      var x = confirm("Are you sure you want to delete?");
+      if (x)
+          return true;
+      else
+        return false;
+    }
+</script> 
+</html>

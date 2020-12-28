@@ -15,7 +15,6 @@
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
             <li><a href="/manufacturer">Manufacturers</a></li>
-            
         </ul>
     </div>
     <div class="container">
@@ -24,8 +23,8 @@
                 <a href="/car/<%=data[i].carID%>">
                 <div class="car">
                     <div class="carName"><%= data[i].name %></div>
-                    <div class="carModel"><%= data[i].country %></div>
-                    <span class="carPrice"><%= data[i]. price%></span>
+                    <div class="carModel"><%= data[i].model %></div>
+                    <span class="carPrice"><%= data[i].price%></span>
                     <div class="carSpeed">Stock: <%= data[i].stock %></div>
                 </div>
                 </a>

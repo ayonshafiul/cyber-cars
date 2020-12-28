@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const { EMLINK } = require("constants");
+const auth = require("./auth");
 
 const app = express();
 const rootDirectoryPath = path.join(__dirname, "public");
@@ -56,8 +57,10 @@ app.get("/car", function(req, res) {
 
 //get info about one car
 app.get("/car/:id", function(req, res) {
+
+
     let sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where carID = ?";
-    db.query(sql, parseInt(req.params.id),function(error, results, fields) {
+    db.query(sql, parseInt(req.params.id), function(error, results, fields) {
         if (error) {
             console.log(error);
         } else {
@@ -478,7 +481,6 @@ app.get("/admin/customerDetails/delete/:id", function(req, res) {
 });
 /************************************************************************** */
 
-/// message routes
 // Enginer S
 
 app.get("/message", (req, res) => {
@@ -511,6 +513,45 @@ app.post("/message/:id", (req, res) => {
         reply: null
     };
     insertMessage(messageObject, req, res);
+});
+
+app.get("/book/:id", auth, (req, res) => {
+    const carID = req.params.id;
+    const userID = req.user.id;
+    let object = {
+        carID,
+        userID,
+        date: new Date(),
+        paymentMethod: "credit"
+    };
+    db.query("select stock from cars where carID = ?", carID, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            res.json("Error!");
+        } else {
+            if (results[0].stock > 0) {
+                let sql = "INSERT INTO booking SET ?";
+                db.query(sql, object, (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                        res.json("Error!");
+                    } else {
+                        db.query("update cars set stock = stock - 1 where carID = ?", carID, (error, results, fields) => {
+                            if (error) {
+                                console.log(error);
+                                res.json("Error!");
+                            } else {
+                                res.redirect('/');
+                            }
+                        })
+                    }
+                })
+            } else {
+                res.json("Stock unavailable! :(")
+            }
+            
+        }
+    })
 })
 
 function insertMessage(messageObject, req, res) {
@@ -520,8 +561,7 @@ function insertMessage(messageObject, req, res) {
         if (error) {
             console.log(error);
         } else {
-            console.log("successfully inserted");
-            res.redirect("/");
+            res.redirect(`/car/${messageObject.carID}`);
         }
     })
 }
@@ -529,6 +569,70 @@ function insertMessage(messageObject, req, res) {
 /***********************************************/
 // Engineer N
 
+
+app.get("/admin/message", (req, res) =>{
+    let sql = "select * from message m inner join cars c on m.carID=c.carID";
+    let searchType = req.query.sortType;
+    if (searchType=="modelasc"){
+        sql = "select * from message m inner join cars c on m.carID=c.carID order by model asc";
+    } else if (searchType=="modeldesc") {
+        sql = "select * from message m inner join cars c on m.carID=c.carID order by model desc";
+    } else if (searchType=="dateasc") {
+        sql = "select * from message m inner join cars c on m.carID=c.carID order by date asc";
+    } else if (searchType=="datedesc") {
+        sql = "select * from message m inner join cars c on m.carID=c.carID order by date desc";
+    }
+
+    db.query(sql, (error, results, fields) => {
+        if ( error) {
+            console.log(error);
+            res.json(error);
+        } else {
+            res.render("adminMessages", {data: results});
+        }
+    })
+});
+
+app.get("/admin/message/delete/:messageID", (req, res) => {
+    const messageID = req.params.messageID;
+    console.log(messageID);
+    let sql = "delete from message where messageID = ?";
+    db.query(sql, messageID, (error, results, fields) => {
+        if ( error) {
+            console.log(error);
+            res.json(error);
+        } else {
+            res.redirect("/admin/message");
+        }
+    });
+});
+
+app.get("/admin/carstatus", (req, res) => {
+    let sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID";
+    const viewType = req.query.viewType;
+    if (viewType == "available") {
+        sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID where stock > 0";
+    } else if (viewType == "outofstock") {
+        sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID where stock = 0";
+    } else if (viewType == "booked") {
+        sql = "select * from booking b inner join users u on b.userID=u.userID inner join cars c on b.carID=c.carID";
+    }
+
+    db.query(sql, (error, results, fields) => {
+        if ( error) {
+            console.log(error);
+            res.json("Error!");
+        } else {
+            if (viewType=="booked") {
+                res.render("adminCarStatusBooked", {data: results});
+            } else {
+                res.render("adminCarStatus", {data: results});
+            }
+            
+        }
+    });
+
+});
 /***********************************************/
 app.listen(process.env.PORT, (req, res) =>  {
     console.log(`Server running on port ${process.env.PORT}`);

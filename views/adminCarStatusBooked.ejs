@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cyber Cars</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Cyber Cars</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="table-data">
+            <form action="/admin/carstatus" method="get">
+                <select id="viewType" name="viewType">
+                    <option>Select car status....</option>
+                    <option value="available">Available</option>
+                    <option value="outofstock">Out of Stock</option>
+                    <option value="booked">Booked</option>
+                </select>
+                <div>
+                    <button type="submit">Show</button>
+                </div>
+            </form>
+            <table>
+                <tr>
+                    <th>Car Model</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+                <% for(var i = 0; i < data.length; i++) { %>
+                    <tr>
+                   <td><%= data[i].model %></td>
+                   <td> <%= data[i].price %> </td>
+                    <td><%= data[i].stock %></td>
+                    <td><%= data[i].name %></td>
+                    <td><%= data[i].email %></td>
+                    <td><%= data[i].phoneNumber %></td>
+                    </tr>
+                <% } %>
+        </table>
+        </div>
+    </div>
+    
+</body>
+<script>
+    function ConfirmDelete()
+    {
+      var x = confirm("Are you sure you want to delete?");
+      if (x)
+          return true;
+      else
+        return false;
+    }
+</script> 
+</html>
