@@ -21,32 +21,31 @@
         },
         active: 'users'
     }) %>
-    <div class="table-data">
-        <h2>Customer Details</h2>
-        <table border='1'>
-            <tr>
-                <th>userId</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Credit Card Info.</th>
-            </tr>
-
-        
-            <% for(var i = 0; i < data.length; i++) { %>
+    <div class="container">
+        <div class="table-data">
+            <h2>Customer Details</h2>
+            <table>
                 <tr>
-               <td><%= data[i].userID %> </td>
-               <td> <%= data[i].name %> </td>
-                <td> <%= data[i].email %></td>
-                <td> <%= data[i].address %></td>
-                <td> <%= data[i].phoneNumber %></td>
-                <td> <%= data[i].creditCard %></td>
-                <td> <a href="/admin/customerDetails/delete/<%=data[i].userID%>"  Onclick="return ConfirmDelete();">Delete</a></td> 
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Action</th>
                 </tr>
-                 <% } %>
-        
-    </table>
+    
+            
+                <% for(var i = 0; i < data.length; i++) { %>
+                    <tr>
+                   <td> <%= data[i].name %> </td>
+                    <td> <%= data[i].email %></td>
+                    <td> <%= data[i].phoneNumber %></td>
+                    <td> <a href="/admin/customerDetails/delete/<%=data[i].userID%>"  Onclick="return ConfirmDelete();">Delete</a></td> 
+                    </tr>
+                     <% } %>
+            
+        </table>
+         
+        </div>
+    </div>
     <script>
         function ConfirmDelete()
         {
@@ -56,7 +55,6 @@
           else
             return false;
         }
-    </script> 
-    </div>
+    </script>
 </body>
 </html>

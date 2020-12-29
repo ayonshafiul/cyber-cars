@@ -22,11 +22,36 @@
         active: 'manufacturers'
     }) %>
     <div class="container">
-        <ul>
+        <h2>Manufacturers</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+
+        
             <% for(var i = 0; i < data.length; i++) { %>
-               <li> <%= data[i].name %> <%= data[i].country %> <a href="/admin/manufacturer/update/<%= data[i].manufacturerID %>">Edit </a><a href="/admin/manufacturer/delete/<%= data[i].manufacturerID %>">Delete</a></li> 
-            <% } %>
-        </ul>
+                <tr>
+               <td> <%= data[i].name %> </td>
+                <td> <%= data[i].country %></td>
+                <td> <a href="/admin/manufacturer/update/<%= data[i].manufacturerID %>">Edit </a></td> 
+                <td><a href="/admin/manufacturer/delete/<%= data[i].manufacturerID %>"  Onclick="return ConfirmDelete();">Delete</a></td>
+                </tr>
+                 <% } %>
+        
+    </table>
     </div>
+    <script>
+        function ConfirmDelete()
+        {
+          var x = confirm("Are you sure you want to delete?");
+          if (x)
+              return true;
+          else
+            return false;
+        }
+    </script> 
 </body>
 </html>

@@ -22,11 +22,41 @@
         active: 'cars'
     }) %>
     <div class="container">
-        <ul>
+        
+        <h2>Cars</h2>
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Color</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Max Speed</th>
+                <th>rangeKM</th>
+                <th>Action</th>
+            </tr>
+
+        
             <% for(var i = 0; i < data.length; i++) { %>
-               <li> <%= data[i].color %> <%= data[i].model %> <%= data[i].price %> <%= data[i].stock %> <%= data[i].engine %> <%= data[i].rangeKM %> <%= data[i].braking %> <%= data[i].maxSpeed %> <%= data[i].autoPilot %> <%= data[i].cameras %> <%= data[i].manufacturerID %> <a href="/admin/car/update/<%= data[i].carID %>">Edit </a><a href="/admin/car/delete/<%= data[i].carID %>">Delete</a></li> 
-            <% } %>
-        </ul>
+                <tr>
+               <td> <%= data[i].model %> </td>
+               <td> <%= data[i].color %> </td>
+                <td> <%= data[i].price %></td>
+                <td> <%= data[i].stock %></td>
+                <td> <%= data[i].maxSpeed %></td>
+                <td> <%= data[i].rangeKM %> </td>
+                <td> <a href="/admin/car/update/<%= data[i].carID %>">Edit </a><a href="/admin/car/delete/<%= data[i].carID %>" onclick="return ConfirmDelete();">Delete</a></td> 
+                </tr>
+                 <% } %>
     </div>
+    <script>
+        function ConfirmDelete()
+        {
+          var x = confirm("Are you sure you want to delete?");
+          if (x)
+              return true;
+          else
+            return false;
+        }
+    </script> 
 </body>
 </html>
