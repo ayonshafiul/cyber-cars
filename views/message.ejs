@@ -7,14 +7,18 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <div class="nav">
-        <div class="logo">Cyber Cars</div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a class="active" href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        </ul>
-    </div>
+        <%- include('partials/navbar', {
+            nav: {
+                home: '/',
+                cars: '/car',
+                manufacturers: '/manufacturer',
+                login: '/login',
+                register: '/register',
+                search: '/search',
+                ask: '/message'
+            },
+            active: 'ask'
+        }) %>
     <div class="container">
         <% let x = ''; %>
         <% if (id) { %>
@@ -24,14 +28,14 @@
         <form action="/message<%=x%>" method="POST">
             <div>
                 <div class="label">
-                    <label for="message">Message</label>
+                    <label for="message">Ask us questions</label>
                 </div>
                 <input type="text" id="message" name="message">
             </div>
             
 
             <div>
-                <button type="submit">Send Message</button>
+                <button type="submit">Ask</button>
             </div>
             
         </form>

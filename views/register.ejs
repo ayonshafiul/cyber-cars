@@ -9,14 +9,18 @@
 </head>
 
 <body>
-    <div class="nav">
-        <div class="logo">Cyber Cars</div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a class="active" href="/register">Register</a></li>
-        </ul>
-    </div>
+    <%- include('partials/navbar', {
+        nav: {
+            home: '/',
+            cars: '/car',
+            manufacturers: '/manufacturer',
+            login: '/login',
+            register: '/register',
+            search: '/search',
+            ask: '/message'
+        },
+        active: 'register'
+    }) %>
     <div class="container">
         <form action="/register" method="POST">
             <div>

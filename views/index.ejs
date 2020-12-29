@@ -8,19 +8,18 @@
 </head>
 
 <body>
-    <div class="nav">
-        <div class="logo">Cyber Cars</div>
-        <div class="text"> <%=id%> </div> 
-        <ul>
-            <li><a class="active" href="/">Home</a></li>
-            <li><a href="/car">All Cars</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-            <li><a href="/manufacturer">Manufacturers</a></li>
-            <!-- <li><a href="/buy">Buy</a></li> -->
-            
-        </ul>
-    </div>
+    <%- include('partials/navbar', {
+        nav: {
+            home: '/',
+            cars: '/car',
+            manufacturers: '/manufacturer',
+            login: '/login',
+            register: '/register',
+            search: '/search',
+            ask: '/message'
+        },
+        active: 'home'
+    }) %>
     <div class="container">
 
     </div>

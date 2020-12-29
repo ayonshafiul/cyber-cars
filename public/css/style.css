@@ -58,9 +58,9 @@ html, body {
 }
 
 .active {
-    border-bottom: 2px solid #ffd300;
+    background: white !important;
+    color: #1f1f1f !important;
 }
-
 
 .container {
     position: relative;
@@ -70,6 +70,11 @@ html, body {
     margin: 0px auto;
     padding: 10px;
     min-height: 1000px;
+}
+.container::after {
+    content:"";
+    display: block;
+    clear: both;
 }
 
 form div {

@@ -7,14 +7,20 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <div class="nav">
-        <div class="logo">Cyber Cars</div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a class="active" href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        </ul>
-    </div>
+    <%- include('partials/navbar', {
+        nav: {
+            login: '/admin/login',
+            addCar: '/admin/car',
+            addMnfctr: '/admin/manufacturer',
+            cars: '/admin/car/update',
+            manufacturers: '/admin/manufacturer/update',
+            search: '/admin/search',
+            users: '/admin/customerDetails',
+            messages: '/admin/message',
+            status: '/admin/carstatus'
+        },
+        active: 'manufacturers'
+    }) %>
     <div class="container">
         <ul>
             <% for(var i = 0; i < data.length; i++) { %>

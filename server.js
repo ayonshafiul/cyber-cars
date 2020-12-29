@@ -35,10 +35,13 @@ app.get('/', (req, res) => {
     // console.log(req.cookies['jwt']);
     // const user= jwt.verify(req.cookies['jwt'],process.env.JWT_SECRET);
     // console.log(user);
-    res.render("index",{id:""});
-
-    
+    res.render("index", {
+    });
 });
+
+app.get("/admin", (req, res) => {
+    res.redirect("/admin/login");
+})
 /*****************************************************/
 // Engineer R
 // get info of all cars
@@ -121,7 +124,7 @@ app.get("/admin/manufacturer/update", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render('manufacturerList', {data: results});
+            res.render('adminManufacturerList', {data: results});
         }
     });
 });
@@ -133,7 +136,7 @@ app.get("/admin/manufacturer/update/:id", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render("manufacturerUpdate", {data: results});
+            res.render("adminManufacturerUpdate", {data: results});
         }
     })
 
@@ -147,7 +150,6 @@ app.get("/admin/manufacturer/delete/:id", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-
             res.redirect("/admin/manufacturer/update");
         }
     })
@@ -198,7 +200,7 @@ app.post("/admin/manufacturer/update/:id", function(req, res) {
 
 //manufucture add
 app.get("/admin/manufacturer", function(req, res) {
-    res.render("manufacturer");
+    res.render("adminManufacturer");
 })
 
 app.post("/admin/manufacturer", function(req, res) {
@@ -223,7 +225,7 @@ app.post("/admin/manufacturer", function(req, res) {
 })
 // caradd 
 app.get("/admin/car", function(req, res) {
-    res.render("car");
+    res.render("adminCar");
 })
 
 app.post("/admin/car", function(req, res) {
@@ -262,7 +264,7 @@ app.get("/admin/car/update", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render('carList', {data: results});
+            res.render('adminCarList', {data: results});
         }
     });
 });
@@ -274,7 +276,7 @@ app.get("/admin/car/update/:id", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render("carUpdate", {data: results});
+            res.render("adminCarUpdate", {data: results});
         }
     })
 
@@ -318,7 +320,7 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/admin/login',(req,res)=>{
-    res.render('adminlogin',{data:""});
+    res.render('adminLogin',{data:""});
 });
 
 app.get("/register", (req, res) => {
@@ -452,15 +454,15 @@ app.post('/register', (req, res) => {
 });
 
 app.get("/admin/customerDetails", function(req, res) {
-    console.log(req.cookies['jwtAdmin']);
-   const user= jwt.verify(req.cookies['jwtAdmin'],process.env.JWTADMIN_SECRET);
-   console.log(user);
+//     console.log(req.cookies['jwtAdmin']);
+//    const user= jwt.verify(req.cookies['jwtAdmin'],process.env.JWTADMIN_SECRET);
+//    console.log(user);
    let sql = "SELECT * FROM users";
    db.query(sql, function(error, results, fields) {
        if (error) {
            console.log(error);
        } else {
-           res.render('customerDetails', {data: results});
+           res.render('adminCustomerDetails', {data: results});
        }
    });
 

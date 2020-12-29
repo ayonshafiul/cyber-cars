@@ -7,26 +7,25 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <div class="nav">
-        <div class="logo">Cyber Cars</div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a  href="/car">All Cars</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-            <li><a class="active" href="/manufacturer">Manufacturers</a></li>
-            
-        </ul>
-    </div>
+    <%- include('partials/navbar', {
+        nav: {
+            home: '/',
+            cars: '/car',
+            manufacturers: '/manufacturer',
+            login: '/login',
+            register: '/register',
+            search: '/search',
+            ask: '/message'
+        },
+        active: 'manufacturers'
+    }) %>
     <div class="container">
-        <div class="mContainer">
             <% for (var i =0; i < data.length; i++ ) { %>
                 <div class="manufacturer">
                     <div class="mName"><%= data[i].name %></div>
                     <div class="mCountry"><%= data[i].country %></div>
                 </div>
             <% } %>
-        </div>
     </div>
 </body>
 </html>

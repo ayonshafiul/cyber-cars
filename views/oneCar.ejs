@@ -7,17 +7,18 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <div class="nav">
-        <div class="logo">Cyber Cars</div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a class="active" href="/car">All Cars</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-            <li><a href="/admin/manufacturerList">Manufacturers</a></li>
-            
-        </ul>
-    </div>
+    <%- include('partials/navbar', {
+        nav: {
+            home: '/',
+            cars: '/car',
+            manufacturers: '/manufacturer',
+            login: '/login',
+            register: '/register',
+            search: '/search',
+            ask: '/message'
+        },
+        active: 'cars'
+    }) %>
     <div class="container">
         <div class="carDetailsContainer">
             <div class="carImageCover"><img src="/img/car%20(<%=data[0].carID%>).jpg"></div>

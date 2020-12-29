@@ -1,0 +1,10 @@
+<div class="nav">
+    <div class="logo">Cyber Cars</div> 
+    <% if (typeof nav != 'undefined') { %>
+        <ul>
+            <% for (const property in nav) { %>
+                <li><a class="<%= typeof active != 'undefined' && property == active ? 'active' : 'inactive' %>" href="<%=nav[property]%>"><%=property%></a></li> 
+            <% } %>  
+        </ul>
+    <% } %>
+</div>
