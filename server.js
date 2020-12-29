@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const { EMLINK } = require("constants");
 const auth = require("./auth");
+const adminAuth = require("./adminAuth");
 
 const app = express();
 const rootDirectoryPath = path.join(__dirname, "public");
@@ -118,7 +119,7 @@ app.post("/search",function(req, res){
 /***********************************************************/
 // Engineer L
 
-app.get("/admin/manufacturer/update", function(req, res) {
+app.get("/admin/manufacturer/update", adminAuth, function(req, res) {
     let sql = "SELECT * FROM manufacturers";
     db.query(sql, function(error, results, fields) {
         if (error) {
@@ -129,7 +130,7 @@ app.get("/admin/manufacturer/update", function(req, res) {
     });
 });
 
-app.get("/admin/manufacturer/update/:id", function(req, res) {
+app.get("/admin/manufacturer/update/:id", adminAuth, function(req, res) {
     const id = req.params.id;
     let sql = "SELECT * from manufacturers where manufacturerID = ?";
     db.query(sql, id, function(error, results, fields) {
@@ -143,7 +144,7 @@ app.get("/admin/manufacturer/update/:id", function(req, res) {
 });
 //Delete
 
-app.get("/admin/manufacturer/delete/:id", function(req, res) {
+app.get("/admin/manufacturer/delete/:id", adminAuth, function(req, res) {
     const id = req.params.id;
     let sql = "DELETE from manufacturers where manufacturerID = ?";
     db.query(sql, id, function(error, results, fields) {
@@ -158,10 +159,10 @@ app.get("/admin/manufacturer/delete/:id", function(req, res) {
 //
 
 //Search
-app.get("/admin/search", function(req, res){
+app.get("/admin/search", adminAuth, function(req, res){
     res.render("adminSearch");
 });
-app.post("/admin/search",function(req, res){
+app.post("/admin/search", adminAuth, function(req, res){
     let word = req.body.search;
     let selectType = req.body.searchType;
     let sql = "";
@@ -186,7 +187,7 @@ app.post("/admin/search",function(req, res){
 })
 
 //manufacturer update
-app.post("/admin/manufacturer/update/:id", function(req, res) {
+app.post("/admin/manufacturer/update/:id", adminAuth, function(req, res) {
     let sql = mysql.format("UPDATE manufacturers SET name=?, country=? where manufacturerID=?", [req.body.name, req.body.country, req.params.id]);
     db.query(sql, function(error, results, fields) {
         if (error) {
@@ -199,11 +200,11 @@ app.post("/admin/manufacturer/update/:id", function(req, res) {
 });
 
 //manufucture add
-app.get("/admin/manufacturer", function(req, res) {
+app.get("/admin/manufacturer", adminAuth, function(req, res) {
     res.render("adminManufacturer");
 })
 
-app.post("/admin/manufacturer", function(req, res) {
+app.post("/admin/manufacturer", adminAuth, function(req, res) {
     // first task: insert into database
     
     var sql = 'INSERT INTO manufacturers SET ?';
@@ -224,11 +225,11 @@ app.post("/admin/manufacturer", function(req, res) {
     
 })
 // caradd 
-app.get("/admin/car", function(req, res) {
+app.get("/admin/car", adminAuth, function(req, res) {
     res.render("adminCar");
 })
 
-app.post("/admin/car", function(req, res) {
+app.post("/admin/car", adminAuth, function(req, res) {
     // first task: insert into database
     
     var sql = 'INSERT INTO cars SET ?';
@@ -258,7 +259,7 @@ app.post("/admin/car", function(req, res) {
     
 })//Till now
 //car update
-app.get("/admin/car/update", function(req, res) {
+app.get("/admin/car/update", adminAuth, function(req, res) {
     let sql = "SELECT * FROM cars";
     db.query(sql, function(error, results, fields) {
         if (error) {
@@ -269,7 +270,7 @@ app.get("/admin/car/update", function(req, res) {
     });
 });
 
-app.get("/admin/car/update/:id", function(req, res) {
+app.get("/admin/car/update/:id", adminAuth, function(req, res) {
     const id = req.params.id;
     let sql = "SELECT * FROM cars where carID = ?";
     db.query(sql, id, function(error, results, fields) {
@@ -282,7 +283,7 @@ app.get("/admin/car/update/:id", function(req, res) {
 
 });
 
-app.post("/admin/car/update/:id", function(req, res) {
+app.post("/admin/car/update/:id", adminAuth, function(req, res) {
     let sql = mysql.format("UPDATE cars SET color=?, model=?, price=?, stock=?, engine=?, rangeKM=?, braking=?, maxSpeed=?, autoPilot=?, cameras=?, manufacturerID=? where carID=?",
      [req.body.color, req.body.model,req.body.price, req.body.stock, req.body.engine, req.body.rangeKM, req.body.braking, req.body.maxSpeed, req.body.autoPilot, req.body.cameras, req.body.manufacturerID, req.params.id]);
   
@@ -297,7 +298,7 @@ app.post("/admin/car/update/:id", function(req, res) {
 });
 //car delete
 
-app.get("/admin/car/delete/:id", function(req, res) {
+app.get("/admin/car/delete/:id", adminAuth, function(req, res) {
     const id = req.params.id;
     let sql = "DELETE from cars where carID = ?";
     db.query(sql, id, function(error, results, fields) {
@@ -392,7 +393,7 @@ app.post('/admin/login', (req, res) => {
                 }
                 res.cookie('jwtAdmin',token, cookieOptions);
                 
-                res.status(200).redirect('/');
+                res.status(200).redirect('/admin/car');
             }
 
         });
@@ -453,7 +454,7 @@ app.post('/register', (req, res) => {
 
 });
 
-app.get("/admin/customerDetails", function(req, res) {
+app.get("/admin/customerDetails", adminAuth,  function(req, res) {
 //     console.log(req.cookies['jwtAdmin']);
 //    const user= jwt.verify(req.cookies['jwtAdmin'],process.env.JWTADMIN_SECRET);
 //    console.log(user);
@@ -468,7 +469,7 @@ app.get("/admin/customerDetails", function(req, res) {
 
 });
 
-app.get("/admin/customerDetails/delete/:id", function(req, res) {
+app.get("/admin/customerDetails/delete/:id", adminAuth, function(req, res) {
    const id = req.params.id;
    let sql = "DELETE FROM users WHERE userID = ? ";
    
@@ -572,7 +573,7 @@ function insertMessage(messageObject, req, res) {
 // Engineer N
 
 
-app.get("/admin/message", (req, res) =>{
+app.get("/admin/message", adminAuth, (req, res) =>{
     let sql = "select * from message m inner join cars c on m.carID=c.carID";
     let searchType = req.query.sortType;
     if (searchType=="modelasc"){
@@ -595,7 +596,7 @@ app.get("/admin/message", (req, res) =>{
     })
 });
 
-app.get("/admin/message/delete/:messageID", (req, res) => {
+app.get("/admin/message/delete/:messageID", adminAuth, (req, res) => {
     const messageID = req.params.messageID;
     console.log(messageID);
     let sql = "delete from message where messageID = ?";
@@ -609,7 +610,7 @@ app.get("/admin/message/delete/:messageID", (req, res) => {
     });
 });
 
-app.get("/admin/carstatus", (req, res) => {
+app.get("/admin/carstatus", adminAuth, (req, res) => {
     let sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID";
     const viewType = req.query.viewType;
     if (viewType == "available") {

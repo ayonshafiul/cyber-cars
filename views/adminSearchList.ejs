@@ -34,7 +34,7 @@
                 <% for(var i = 0; i < data.length; i++) { %>
                     <tr>
                     <td> <%= data[i].name %></td>
-                   <td><a href="/"><%= data[i].model %></a> </td>
+                   <td><a href="/admin/car/update/<%=data[i].carID%>"><%= data[i].model%></a> </td>
                    <td> <%= data[i].color %> </td>
                     <td> <%= data[i].price %></td>
                     </tr>

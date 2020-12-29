@@ -43,4 +43,4 @@ async function insertAdmin(email,password){
 
 
 }
-insertAdmin('name@g.bracu.com','name');
+insertAdmin('cyberpunk2@gmail.com','1234');
