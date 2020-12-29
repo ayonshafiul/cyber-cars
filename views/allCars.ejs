@@ -22,6 +22,7 @@
             <% for (var i =0; i < data.length; i++ ) { %>
                 <a href="/car/<%=data[i].carID%>">
                 <div class="car">
+                    <div class="carImage"><img src="/img/car%20(<%=data[i].carID%>).jpg"></div>
                     <div class="carName"><%= data[i].name %></div>
                     <div class="carModel"><%= data[i].model %></div>
                     <span class="carPrice"><%= data[i].price%></span>

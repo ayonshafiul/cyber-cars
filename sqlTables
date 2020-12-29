@@ -26,11 +26,11 @@ CREATE TABLE cars (
     rangeKM int,
     braking decimal(3,2),
     maxSpeed int,
-    autoPilot boolean,
-    cameras boolean,
+    autoPilot varchar(20),
+    cameras varchar(20),
     manufacturerID int,
     Primary Key(carID),
-    Foreign Key(manufacturerID) references manufacturers(manufacturerID)
+    Foreign Key(manufacturerID) references manufacturers(manufacturerID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE message (
@@ -42,27 +42,28 @@ CREATE TABLE message (
     status varchar(20),
     date datetime,
     Primary Key(messageID),
-    Foreign Key(userID) references users(userID),
-    Foreign Key(carID) references cars(carID)
+    Foreign Key(userID) references users(userID)  ON DELETE CASCADE ON UPDATE CASCADE,
+    Foreign Key(carID) references cars(carID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 
 CREATE TABLE booking (
+    bookingID int AUTO_INCREMENT,
     userID int,
     carID int,
     date datetime,
     paymentMethod varchar(20),
-    Primary Key(userID, carID),
-    Foreign Key(userID) references users(userID),
-    Foreign Key(carID) references cars(carID)
+    Primary Key(bookingID),
+    Foreign Key(userID) references users(userID) ON UPDATE CASCADE ON DELETE CASCADE,
+    Foreign Key(carID) references cars(carID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE photos (
     carID INT AUTO_INCREMENT,
     photo varchar(255),
     Primary Key(carID, photo),
-    Foreign Key(carID) references cars(carID)
+    Foreign Key(carID) references cars(carID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE admins (
