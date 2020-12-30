@@ -153,13 +153,13 @@ app.post("/search",function(req, res){
     let sql = "";
     let sqlValues = ['%' + word + '%'];
     if (selectType == "model") {
-        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where model like ?";
+        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where model like ? order by price";
     } else if(selectType == "manufacturer") {
-        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where name like ?";
+        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where name like ? order by price";
     } else if (selectType == "price") {
         let from = parseInt(req.body.from);
         let to = parseInt(req.body.to);
-        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where price between ? and ?"; 
+        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where price between ? and ? order by price"; 
         sqlValues = [from, to];
     }
     db.query(sql, sqlValues, (error, results, fields)=> {
@@ -229,13 +229,13 @@ app.post("/admin/search", adminAuth, function(req, res){
     let sql = "";
     let sqlValues = ['%' + word + '%'];
     if (selectType == "model") {
-        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where model like ?";
+        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where model like ? order by price";
     } else if(selectType == "manufacturer") {
-        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where name like ?";
+        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where name like ? order by price";
     } else if (selectType == "price") {
         let from = parseInt(req.body.from);
         let to = parseInt(req.body.to);
-        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where price between ? and ?"; 
+        sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID where price between ? and ? order by price"; 
         sqlValues = [from, to];
     }
     db.query(sql, sqlValues, (error, results, fields)=> {
@@ -321,7 +321,7 @@ app.post("/admin/car", adminAuth, function(req, res) {
 })//Till now
 //car update
 app.get("/admin/car/update", adminAuth, function(req, res) {
-    let sql = "SELECT * FROM cars order by carID";
+    let sql = "SELECT * FROM cars order by carID desc";
     db.query(sql, function(error, results, fields) {
         if (error) {
             console.log(error);
@@ -408,10 +408,10 @@ app.post('/login', (req, res) => {
 
         db.query('SELECT * FROM users WHERE email = ?', [email],async(error,results)=>{
             if (typeof results[0] == 'undefined' ) {
-                return res.status(400).render('login',{nav: defaultNav, active: 'login', message: 'Please provide an email and password'});
+                return res.status(400).render('login',{nav: defaultNav, active: 'login', message: 'Uh oh! Did you register with this email?'});
             } else {
                 if(!(await bcrypt.compare(password, results[0].password))){
-                    return res.status(400).render('login',{nav: defaultNav, active: 'login', message: 'Please provide an email and password'});
+                    return res.status(400).render('login',{nav: defaultNav, active: 'login', message: 'Somebody forgot their password :)'});
                 }
                 else{
                     const id= results[0].userID;
@@ -526,7 +526,7 @@ app.get("/admin/customerDetails", adminAuth,  function(req, res) {
 //     console.log(req.cookies['jwtAdmin']);
 //    const user= jwt.verify(req.cookies['jwtAdmin'],process.env.JWTADMIN_SECRET);
 //    console.log(user);
-   let sql = "SELECT * FROM users";
+   let sql = "SELECT * FROM users order by userID desc";
    db.query(sql, function(error, results, fields) {
        if (error) {
            console.log(error);
@@ -565,30 +565,51 @@ app.get("/message", (req, res) => {
 app.post("/message", (req, res) => {
     let messageObject = {
         carID: null,
-        userID: req.user.id || null,
+        userID: null,
         message: req.body.message,
         status: "unchecked",
         date: new Date(),
         reply: null
     };
+    if (typeof req.user != 'undefined') {
+        messageObject.userID = req.user.id;
+    }
     insertMessage(messageObject, req, res);
 });
 
 app.get("/message/:id", (req, res) => {
-    res.render("message", {id: req.params.id});
+    res.render("message", {id: req.params.id, nav: loggedInNav, active:'ask'});
 });
 
 app.post("/message/:id", (req, res) => {
     let messageObject = {
         carID: req.params.id,
-        userID: req.user.id || null,
+        userID: null,
         message: req.body.message,
         status: "unchecked",
         date: new Date(),
         reply: null
     };
+    if (typeof req.user != 'undefined') {
+        messageObject.userID = req.user.id;
+    }
     insertMessage(messageObject, req, res);
 });
+function insertMessage(messageObject, req, res) {
+    let sql = "INSERT INTO message SET ?";
+    db.query(sql, messageObject, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if (messageObject.carID) {
+                res.redirect(`/car/${messageObject.carID}`);
+            } else {
+                res.redirect('/');
+            }
+            
+        }
+    })
+}
 
 app.get("/book/:id", auth, (req, res) => {
     const carID = req.params.id;
@@ -676,33 +697,23 @@ app.get('/admin/logout', adminAuth, (req, res) => {
     res.clearCookie('jwtAdmin');
     res.redirect('/admin/login');
 });
-function insertMessage(messageObject, req, res) {
-    // TO DO: Check if user is already logged in
-    let sql = "INSERT INTO message SET ?";
-    db.query(sql, messageObject, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-        } else {
-            res.redirect(`/car/${messageObject.carID}`);
-        }
-    })
-}
+
 
 /***********************************************/
 // Engineer N
 
 
 app.get("/admin/message", adminAuth, (req, res) =>{
-    let sql = "select * from message m inner join cars c on m.carID=c.carID";
+    let sql = "select * from message order by messageID desc";
     let searchType = req.query.sortType;
     if (searchType=="modelasc"){
-        sql = "select * from message m inner join cars c on m.carID=c.carID order by model asc";
+        sql = "select * from message m left join cars c on m.carID=c.carID order by model asc";
     } else if (searchType=="modeldesc") {
-        sql = "select * from message m inner join cars c on m.carID=c.carID order by model desc";
+        sql = "select * from message m left join cars c on m.carID=c.carID order by model desc";
     } else if (searchType=="dateasc") {
-        sql = "select * from message m inner join cars c on m.carID=c.carID order by date asc";
+        sql = "select * from message m left join cars c on m.carID=c.carID order by date asc";
     } else if (searchType=="datedesc") {
-        sql = "select * from message m inner join cars c on m.carID=c.carID order by date desc";
+        sql = "select * from message m left join cars c on m.carID=c.carID order by date desc";
     }
 
     db.query(sql, (error, results, fields) => {
@@ -730,14 +741,14 @@ app.get("/admin/message/delete/:messageID", adminAuth, (req, res) => {
 });
 
 app.get("/admin/carstatus", adminAuth, (req, res) => {
-    let sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID";
+    let sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID order by carID desc";
     const viewType = req.query.viewType;
     if (viewType == "available") {
-        sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID where stock > 0";
+        sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID where stock > 0 order by carID desc";
     } else if (viewType == "outofstock") {
-        sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID where stock = 0";
+        sql = "select * from cars c inner join manufacturers ma on c.manufacturerID = ma.manufacturerID where stock = 0 order by carID desc";
     } else if (viewType == "booked") {
-        sql = "select * from booking b inner join users u on b.userID=u.userID inner join cars c on b.carID=c.carID";
+        sql = "select * from booking b inner join users u on b.userID=u.userID inner join cars c on b.carID=c.carID order by bookingID desc";
     }
 
     db.query(sql, (error, results, fields) => {
