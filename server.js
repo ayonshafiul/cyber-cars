@@ -181,7 +181,7 @@ app.post("/search",function(req, res){
 // Engineer L
 
 app.get("/admin/manufacturer/update", adminAuth, function(req, res) {
-    let sql = "SELECT * FROM manufacturers";
+    let sql = "SELECT * FROM manufacturers order by manufacturerID desc";
     db.query(sql, function(error, results, fields) {
         if (error) {
             console.log(error);
@@ -321,7 +321,7 @@ app.post("/admin/car", adminAuth, function(req, res) {
 })//Till now
 //car update
 app.get("/admin/car/update", adminAuth, function(req, res) {
-    let sql = "SELECT * FROM cars";
+    let sql = "SELECT * FROM cars order by carID";
     db.query(sql, function(error, results, fields) {
         if (error) {
             console.log(error);
@@ -379,7 +379,7 @@ app.get("/admin/car/delete/:id", adminAuth, function(req, res) {
 // Engineer M
 app.get('/login', (req, res) => {
     if (typeof req.user  == 'undefined') {
-        res.render("login", {data: "", nav: defaultNav, active: 'login'})
+        res.render("login", {message: "", nav: defaultNav, active: 'login'})
     } else {
         res.redirect('/');
     }
@@ -392,41 +392,41 @@ app.get('/admin/login',(req,res)=>{
 
 app.get("/register", (req, res) => {
     if (typeof req.user  == 'undefined') {
-        res.render("register", {data: "", nav: defaultNav, active: 'register'})
+        res.render("register", {message: "", nav: defaultNav, active: 'register'})
     } else {
         res.redirect('/');
     }
 });
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
-    // res.json(req.body);
     try{
         const {email, password} = req.body;
 
         if(!email || !password){
-            return res.status(400).render('login',{data: 'Please provide an email and password'})
+            return res.status(400).render('login',{nav: defaultNav, active: 'login', message: 'Please provide an email and password'})
         }
 
         db.query('SELECT * FROM users WHERE email = ?', [email],async(error,results)=>{
-            if(!results || !(await bcrypt.compare(password, results[0].password))){
-                res.status(401).render('login',{data: 'Provide correct email and password'})
-
-            }
-            else{
-                const id= results[0].userID;
-                const token=jwt.sign({id},process.env.JWT_SECRET,{expiresIn: process.env.JWT_EXPIRES_IN});
-
-                console.log('The token is'+ token);
-
-                cookieOptions = {
-                    expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES * 24 *60 *60),
-                    httpOnly: true
+            if (typeof results[0] == 'undefined' ) {
+                return res.status(400).render('login',{nav: defaultNav, active: 'login', message: 'Please provide an email and password'});
+            } else {
+                if(!(await bcrypt.compare(password, results[0].password))){
+                    return res.status(400).render('login',{nav: defaultNav, active: 'login', message: 'Please provide an email and password'});
                 }
-                res.cookie('jwt',token, cookieOptions);
-                res.status(200).redirect('/');
+                else{
+                    const id= results[0].userID;
+                    const token=jwt.sign({id},process.env.JWT_SECRET,{expiresIn: process.env.JWT_EXPIRES_IN});
+    
+                    console.log('The token is'+ token);
+    
+                    cookieOptions = {
+                        expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES * 24 *60 *60),
+                        httpOnly: true
+                    }
+                    res.cookie('jwt',token, cookieOptions);
+                    res.status(200).redirect('/');
+                }
             }
-
         });
     }
     catch(error){
@@ -475,11 +475,6 @@ app.post('/admin/login', (req, res) => {
 
 
 app.post('/register', (req, res) => {
-    console.log(req.body);
-    // res.json(req.body);
-
-    // insert into database
-    
     const{name,phone,email,password, passwordConfirm}=req.body;
     db.query('select email from users where email=?' , [email], async (error,results) => {
        if(error){
@@ -487,7 +482,7 @@ app.post('/register', (req, res) => {
        } 
        
        if(results.length>0){
-           return res.render("register",{data:"email already exits"});
+           return res.render("register",{nav: defaultNav, active: 'register',message:"Email already exists"});
         
        }
        else if(password !== passwordConfirm){
@@ -496,8 +491,6 @@ app.post('/register', (req, res) => {
        }
    
        var hashedPassword = await bcrypt.hash(password,8);
-       console.log(hashedPassword);
-
        var sql = 'INSERT INTO users SET ?';
         var value = {
             name: req.body.name,
@@ -508,11 +501,17 @@ app.post('/register', (req, res) => {
          };
         db.query(sql, value, function(error, results, fields) {
             if (error) {
-            console.log(error);
+                console.log(error);
             } 
             else {
-                console.log(results);
-                res.render("success");
+                const id = results.insertId;
+                const token=jwt.sign({id},process.env.JWT_SECRET,{expiresIn: process.env.JWT_EXPIRES_IN});
+                cookieOptions = {
+                    expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES * 24 *60 *60),
+                    httpOnly: true
+                }
+                res.cookie('jwt',token, cookieOptions);
+                res.redirect('/');
              }
 
 
