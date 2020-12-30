@@ -46,20 +46,23 @@
             </div>
         </form>
     </div>
-    <script>
-        function selectChanged() {
-            var selectElement = document.getElementById("searchType");
-            var selectValue = selectElement.value;
-            if (selectValue == "price") {
-                document.getElementById("searchBox").style.display = "none";
-                document.getElementById("fromDiv").style.display = "block";
-                document.getElementById("toDiv").style.display = "block"; 
-            } else {
-                document.getElementById("searchBox").style.display = "block";
-                document.getElementById("fromDiv").style.display = "none";
-                document.getElementById("toDiv").style.display = "none";
-            }
-        }
-    </script>
+    
+    <%- include('partials/footer') %>
+    
 </body>
+<script>
+    function selectChanged() {
+        var selectElement = document.getElementById("searchType");
+        var selectValue = selectElement.value;
+        if (selectValue == "price") {
+            document.getElementById("searchBox").style.display = "none";
+            document.getElementById("fromDiv").style.display = "block";
+            document.getElementById("toDiv").style.display = "block"; 
+        } else {
+            document.getElementById("searchBox").style.display = "block";
+            document.getElementById("fromDiv").style.display = "none";
+            document.getElementById("toDiv").style.display = "none";
+        }
+    }
+</script>
 </html>

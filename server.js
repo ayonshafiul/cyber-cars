@@ -66,11 +66,19 @@ db.connect((err) => {
 });
 
 app.get('/', (req, res) => {
-    if (typeof req.user  == 'undefined') {
-        res.render("index", {nav: defaultNav, active: 'home'})
-    } else {
-        res.render("index", {nav: loggedInNav, active: 'home'})
-    }
+    let sql = "select * from cars c inner join manufacturers m on c.manufacturerID=m.manufacturerID order by carID desc limit 20";
+    db.query(sql, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+        } else {
+            
+            if (typeof req.user  == 'undefined') {
+                res.render("index", {data: results, nav: defaultNav, active: 'home'})
+            } else {
+                res.render("index", {data: results, nav: loggedInNav, active: 'home'})
+            }
+        }
+    })
 });
 
 app.get("/admin", (req, res) => {

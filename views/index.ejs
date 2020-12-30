@@ -5,12 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>Cyber Cars</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+    <style>
+        .splide__slide img {
+              width: 100%;
+        }
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 3em;
+            padding: 1em;
+            background: rgba(1,1,1,0.4);
+            color:white;
+        }
+        #splide2 {
+            margin-top: 1em;
+        }
+        .scontainer{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 300px;
+            font-size: 7em;
+            background: white;
+            color: black;
+        }
+    </style>
 </head>
 
 <body>
     <%- include('partials/navbar') %>
     <div class="container">
-
+        <h2>Cars</h2>
+        <div id="splide" class="splide">
+            <div class="splide__track">
+                <div class="splide__list">
+                    <% for (let i = 0; i < data.length; i++ ) {%>
+                    <div class="splide__slide"><div class="title"><%=data[i].model%></div><a href="/car/<%=data[i].carID%>"><img src="/img/car%20(<%=data[i].carID%>).jpg" alt=""></a></div>
+                    <% } %>
+                 </div>
+            </div>
+        </div>
+        <h2>Manufacturers</h2>
+        <div class="splide" id="splide2">
+            <div class="splide__track">
+                <div class="splide__list">
+                    <% for (let i = 0; i < data.length; i++ ) {%>
+                    <div class="splide__slide scontainer"><div class="m"><%=data[i].name%></div></div>
+                    <% } %>
+                 </div>
+            </div>
+        </div>
     </div>
+    <%- include('partials/footer') %>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+<script>
+    new Splide( '#splide', {
+        'cover': true,
+        'heightRatio': 0.5,
+        'autoplay': true,
+        'interval': 2500,
+        'pauseOnHover': false,
+        'rewind': true
+    } ).mount();
+
+    new Splide( '#splide2', {
+        'autoplay': true,
+        'interval': 1500,
+        'pauseOnHover': false,
+        'rewind': true,
+        'pagination': false,
+        'arrows': false,
+        'direction': 'ttb',
+        'height': '30vh'
+    } ).mount();
+</script>
 </html>

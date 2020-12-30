@@ -4,7 +4,7 @@ html, body {
     background: white;
     margin: 0;
     padding: 0;
-    background: #ffd300;
+    background: whitesmoke;
     font-family: 'Russo One', Helvetica, sans-serif;
 }
 .nav {
@@ -69,7 +69,7 @@ html, body {
     color: white;
     margin: 0px auto;
     padding: 10px;
-    min-height: 1000px;
+    min-height: 700px;
 }
 .container::after {
     content:"";
@@ -119,6 +119,8 @@ form div button {
 h2{
     text-align: center;
     margin: 1em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 form div button:hover {
     background: #ffd300;
@@ -264,4 +266,18 @@ select {
     background: #1f1f1f;
     color: #ffd300;
     border-left: 3px solid #ffd300;
+}
+
+.footer{
+    width: 80%;
+    margin: 0px auto;
+    background: #1f1f1f;
+    color:#ffd300;
+    margin: 0px auto;
+    padding: 10px;
+}
+
+.footer p{
+    text-align: center;
+    margin: 0px;
 }
