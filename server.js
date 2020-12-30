@@ -672,6 +672,11 @@ app.get('/logout', auth, (req, res) => {
     res.clearCookie('jwt');
     res.redirect('/login');
 })
+
+app.get('/admin/logout', adminAuth, (req, res) => {
+    res.clearCookie('jwtAdmin');
+    res.redirect('/admin/login');
+});
 function insertMessage(messageObject, req, res) {
     // TO DO: Check if user is already logged in
     let sql = "INSERT INTO message SET ?";

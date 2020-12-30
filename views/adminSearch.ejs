@@ -14,7 +14,6 @@
 <body>
     <%- include('partials/navbar', {
         nav: {
-            login: '/admin/login',
             addCar: '/admin/car',
             addMnfctr: '/admin/manufacturer',
             cars: '/admin/car/update',
@@ -22,7 +21,8 @@
             search: '/admin/search',
             users: '/admin/customerDetails',
             messages: '/admin/message',
-            status: '/admin/carstatus'
+            status: '/admin/carstatus',
+            logout: '/admin/logout'
         },
         active: 'search'
     }) %>
