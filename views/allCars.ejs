@@ -7,18 +7,7 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <%- include('partials/navbar', {
-        nav: {
-            home: '/',
-            cars: '/car',
-            manufacturers: '/manufacturer',
-            login: '/login',
-            register: '/register',
-            search: '/search',
-            ask: '/message'
-        },
-        active: 'cars'
-    }) %>
+    <%- include('partials/navbar') %>
     <div class="container">
         <div class="carContainer">
             <% for (var i =0; i < data.length; i++ ) { %>

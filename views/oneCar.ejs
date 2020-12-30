@@ -7,18 +7,7 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <%- include('partials/navbar', {
-        nav: {
-            home: '/',
-            cars: '/car',
-            manufacturers: '/manufacturer',
-            login: '/login',
-            register: '/register',
-            search: '/search',
-            ask: '/message'
-        },
-        active: 'cars'
-    }) %>
+    <%- include('partials/navbar') %>
     <div class="container">
         <div class="carDetailsContainer">
             <div class="carImageCover"><img src="/img/car%20(<%=data[0].carID%>).jpg"></div>

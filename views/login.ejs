@@ -7,18 +7,7 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <%- include('partials/navbar', {
-        nav: {
-            home: '/',
-            cars: '/car',
-            manufacturers: '/manufacturer',
-            login: '/login',
-            register: '/register',
-            search: '/search',
-            ask: '/message'
-        },
-        active: 'login'
-    }) %>
+    <%- include('partials/navbar') %>
     <div class="container">
         <form action="/login" method="POST">
             <div>

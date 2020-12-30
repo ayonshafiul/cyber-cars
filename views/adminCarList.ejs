@@ -7,20 +7,7 @@
     <title>Cyber Cars</title>
 </head>
 <body>
-    <%- include('partials/navbar', {
-        nav: {
-            login: '/admin/login',
-            addCar: '/admin/car',
-            addMnfctr: '/admin/manufacturer',
-            cars: '/admin/car/update',
-            manufacturers: '/admin/manufacturer/update',
-            search: '/admin/search',
-            users: '/admin/customerDetails',
-            messages: '/admin/message',
-            status: '/admin/carstatus'
-        },
-        active: 'cars'
-    }) %>
+    <%- include('partials/navbar') %>
     <div class="container">
         
         <h2>Cars</h2>

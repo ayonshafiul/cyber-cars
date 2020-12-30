@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const { EMLINK } = require("constants");
 const auth = require("./auth");
 const adminAuth = require("./adminAuth");
+const semiAuth = require("./semiAuth");
 
 const app = express();
 const rootDirectoryPath = path.join(__dirname, "public");
@@ -20,7 +21,39 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(rootDirectoryPath));
+app.use(semiAuth);
 
+const defaultNav = {
+    home: '/',
+    cars: '/car',
+    manufacturers: '/manufacturer',
+    login: '/login',
+    register: '/register',
+    search: '/search',
+    ask: '/message'
+};
+
+const loggedInNav = {
+    home: '/',
+    cars: '/car',
+    manufacturers: '/manufacturer',
+    search: '/search',
+    ask: '/message',
+    profile: '/user/profile',
+    bookings: '/user/booking',
+    logout: '/logout'
+};
+const adminLoggedInNav = {
+    addCar: '/admin/car',
+    addMnfctr: '/admin/manufacturer',
+    cars: '/admin/car/update',
+    manufacturers: '/admin/manufacturer/update',
+    search: '/admin/search',
+    users: '/admin/customerDetails',
+    messages: '/admin/message',
+    status: '/admin/carstatus',
+    logout: '/admin/logout'
+};
 
 app.set("view engine", "ejs");
 
@@ -33,11 +66,11 @@ db.connect((err) => {
 });
 
 app.get('/', (req, res) => {
-    // console.log(req.cookies['jwt']);
-    // const user= jwt.verify(req.cookies['jwt'],process.env.JWT_SECRET);
-    // console.log(user);
-    res.render("index", {
-    });
+    if (typeof req.user  == 'undefined') {
+        res.render("index", {nav: defaultNav, active: 'home'})
+    } else {
+        res.render("index", {nav: loggedInNav, active: 'home'})
+    }
 });
 
 app.get("/admin", (req, res) => {
@@ -52,7 +85,11 @@ app.get("/car", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render('allCars', {data: results});
+            if (typeof req.user  == 'undefined') {
+                res.render("allCars", {data: results, nav: defaultNav, active: 'cars'})
+            } else {
+                res.render("allCars", {data: results, nav: loggedInNav, active: 'cars'})
+            }
         }
     });
     
@@ -68,7 +105,11 @@ app.get("/car/:id", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render("oneCar", {data: results});
+            if (typeof req.user  == 'undefined') {
+                res.render("oneCar", {data: results, nav: defaultNav, active: 'cars'})
+            } else {
+                res.render("oneCar", {data: results, nav: loggedInNav, active: 'cars'})
+            }
         }
     });
     
@@ -81,14 +122,22 @@ app.get("/manufacturer", function(req, res) {
         if (error) {
             console.log(error);
         } else {
-            res.render('allManufacturers', {data: results});
+            if (typeof req.user  == 'undefined') {
+                res.render("allManufacturers", {data: results, nav: defaultNav, active: 'manufacturers'})
+            } else {
+                res.render("allManufacturers", {data: results, nav: loggedInNav, active: 'manufacturers'})
+            }
         }
     });
     
 });
 // search cars, manufacturers, price range
 app.get("/search", function(req, res){
-    res.render("userSearch");
+    if (typeof req.user  == 'undefined') {
+        res.render("userSearch", {nav: defaultNav, active: 'search'})
+    } else {
+        res.render("userSearch", {nav: loggedInNav, active: 'search'})
+    }
 });
 app.post("/search",function(req, res){
     let word = req.body.search;
@@ -109,7 +158,11 @@ app.post("/search",function(req, res){
         if (error) {
             console.log(error);
         } else {
-            res.render("userSearchList", {data: results});
+            if (typeof req.user  == 'undefined') {
+                res.render("userSearchList", {data: results, nav: defaultNav, active: 'search'})
+            } else {
+                res.render("userSearchList", {data: results, nav: loggedInNav, active: 'search'})
+            }
         } 
     });   
 })
@@ -317,7 +370,12 @@ app.get("/admin/car/delete/:id", adminAuth, function(req, res) {
 /****************************************************************************/
 // Engineer M
 app.get('/login', (req, res) => {
-    res.render("login", {data:""});
+    if (typeof req.user  == 'undefined') {
+        res.render("login", {data: "", nav: defaultNav, active: 'login'})
+    } else {
+        res.redirect('/');
+    }
+    
 });
 
 app.get('/admin/login',(req,res)=>{
@@ -325,7 +383,11 @@ app.get('/admin/login',(req,res)=>{
 });
 
 app.get("/register", (req, res) => {
-    res.render("register", {data:""});
+    if (typeof req.user  == 'undefined') {
+        res.render("register", {data: "", nav: defaultNav, active: 'register'})
+    } else {
+        res.redirect('/');
+    }
 });
 
 app.post('/login', (req, res) => {
@@ -354,7 +416,6 @@ app.post('/login', (req, res) => {
                     httpOnly: true
                 }
                 res.cookie('jwt',token, cookieOptions);
-                
                 res.status(200).redirect('/');
             }
 
@@ -487,13 +548,17 @@ app.get("/admin/customerDetails/delete/:id", adminAuth, function(req, res) {
 // Enginer S
 
 app.get("/message", (req, res) => {
-    res.render("message", {id: null});
+    if (typeof req.user  == 'undefined') {
+        res.render("message", {id: null, nav: defaultNav, active: 'ask'})
+    } else {
+        res.render("message", {id: null, nav: loggedInNav, active: 'ask'})
+    }
 });
 
 app.post("/message", (req, res) => {
     let messageObject = {
         carID: null,
-        userID: null,
+        userID: req.user.id || null,
         message: req.body.message,
         status: "unchecked",
         date: new Date(),
@@ -509,7 +574,7 @@ app.get("/message/:id", (req, res) => {
 app.post("/message/:id", (req, res) => {
     let messageObject = {
         carID: req.params.id,
-        userID: null,
+        userID: req.user.id || null,
         message: req.body.message,
         status: "unchecked",
         date: new Date(),
@@ -544,7 +609,7 @@ app.get("/book/:id", auth, (req, res) => {
                                 console.log(error);
                                 res.json("Error!");
                             } else {
-                                res.redirect('/');
+                                res.redirect('/user/booking');
                             }
                         })
                     }
@@ -557,6 +622,48 @@ app.get("/book/:id", auth, (req, res) => {
     })
 })
 
+app.get("/user/booking", auth, (req, res) => {
+    const userID = req.user.id;
+    let sql = "select * from booking b inner join cars c on b.carID=c.carID where userID = ? order by bookingID desc";
+    db.query(sql, userID, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            res.json("error!");
+        } else {
+            res.render("userBooking", {data: results, nav: loggedInNav, active: 'bookings'});
+        }
+    })
+});
+
+app.get("/user/profile", auth, (req, res) =>{
+    let sql = "select * from users where userID = ?";
+    db.query(sql, req.user.id, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            res.json("UH oh!");
+        } else {
+            res.render("userProfile", {data: results, nav: loggedInNav, active: 'profile'});
+        }
+    });
+});
+
+app.post("/user/profile/update", auth, (req, res) => {
+    const {name, address, phoneNumber, creditCard} = req.body;
+    let sql = "update users set name = ?, address = ?, phoneNumber = ?, creditCard = ? where userID = ?";
+    db.query(sql, [name, address, phoneNumber, creditCard, req.user.id], (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            res.json("UH oh!");
+        } else {
+            res.redirect('/user/profile');
+        }
+    });
+});
+
+app.get('/logout', auth, (req, res) => {
+    res.clearCookie('jwt');
+    res.redirect('/login');
+})
 function insertMessage(messageObject, req, res) {
     // TO DO: Check if user is already logged in
     let sql = "INSERT INTO message SET ?";

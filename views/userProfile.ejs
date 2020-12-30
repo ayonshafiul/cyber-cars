@@ -1,60 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <title>Cyber Cars</title>
 </head>
-
 <body>
     <%- include('partials/navbar') %>
     <div class="container">
-        <form action="/register" method="POST">
+        <h2>Profile</h2>
+        <form action="/user/profile/update" method="POST">
             <div>
                 <div class="label">
                     <label for="name">Name</label>
                 </div>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" value="<%= data[0].name %>">
             </div>
-            <div>
-                <div class="label">
-                    <label for="phone">Phone Number</label>
-                </div>
-                <input type="tel" id="phone" name="phone" pattern="01[0-9]{9}" required>
-            </div>
-
 
             <div>
                 <div class="label">
-                    <label for="email">Email</label>
+                    <label for="">Email</label>
                 </div>
-                <input type="email" id="email" name="email" pattern="*@*.*" required>
+                <input type="text" id="" name="" value="<%= data[0].email%>" disabled>
             </div>
             <div>
                 <div class="label">
-                    <label for="password">Password</label>
+                    <label for="address">Address</label>
                 </div>
-                <input type="password" id="password" name="password" required>
+                <input type="text" id="address" name="address" value="<%= data[0].address%>">
             </div>
             <div>
                 <div class="label">
-                    <label for="passwordConfirm">Confirm password</label>
+                    <label for="phoneNumber">Phone Number</label>
                 </div>
-                <input type="password" id="passwordConfirm" name="passwordConfirm" required>
-
+                <input type="text" id="phoneNumber" name="phoneNumber" value="<%= data[0].phoneNumber%>">
             </div>
             <div>
-                <button type="submit">Register</button>
+                <div class="label">
+                    <label for="creditCard">Cradit Card</label>
+                </div>
+                <input type="text" id="creditCard" name="creditCard" value="<%= data[0].creditCard%>">
             </div>
-            <h1>
-                <%= data %>
-            </h1>
-    </div>
-    </form>
-
+            <div>
+                <button type="submit">Update Profile</button>
+            </div>
+        </form>
     </div>
 </body>
-
 </html>

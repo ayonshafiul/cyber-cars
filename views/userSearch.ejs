@@ -12,25 +12,13 @@
     </style>
 </head>
 <body>
-    <%- include('partials/navbar', {
-        nav: {
-            home: '/',
-            cars: '/car',
-            manufacturers: '/manufacturer',
-            login: '/login',
-            register: '/register',
-            search: '/search',
-            ask: '/message'
-        },
-        active: 'search'
-    }) %>
+    <%- include('partials/navbar') %>
     <div class="container">
-        <form action="/admin/search" method="POST">
+        <form action="/search" method="POST">
                 <label for="searchType"></label>
                 <select id="searchType" name="searchType" onChange="selectChanged()">
                     <option name="searchType1" value="model">Model</option>
                     <option value="manufacturer">Manufacturer</option>
-                    <option value="feature">Feature</option>
                     <option value="price">Price</option>
                 </select>
             

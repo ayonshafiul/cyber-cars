@@ -10,20 +10,20 @@
     <%- include('partials/navbar') %>
     <div class="container">
         <div class="table-data">
-            <h2>Search Results</h2>
+            <h2>Bookings</h2>
             <table>
                 <tr>
-                    <th>Manufacturer</th>
                     <th>Model</th>
                     <th>Color</th>
                     <th>Price</th>
+                    <th>Date</th>
                 </tr>
                 <% for(var i = 0; i < data.length; i++) { %>
                     <tr>
-                    <td> <%= data[i].name %></td>
                    <td><a href="/car/<%=data[i].carID%>"><%= data[i].model %></a> </td>
                    <td> <%= data[i].color %> </td>
                     <td> <%= data[i].price %></td>
+                    <td> <%= data[i].date %></td>
                     </tr>
                 <% } %>
         </table>
@@ -31,14 +31,4 @@
     </div>
     
 </body>
-<script>
-    function ConfirmDelete()
-    {
-      var x = confirm("Are you sure you want to delete?");
-      if (x)
-          return true;
-      else
-        return false;
-    }
-</script> 
 </html>
