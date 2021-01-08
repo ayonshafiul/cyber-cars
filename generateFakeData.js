@@ -6,12 +6,12 @@ const db = require("./db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// number of users to generate
+// number of dummy data to generate
 const numUsers = 100;
-const numManufacturers = 100;
-const numCars = 313;
+const numManufacturers = 25;
+const numCars = 25;
 const numMessages = 100;
-const numBookings = 100;
+const numBookings = 30;
 const timeBetweenEachEntry = 5;
 
 
@@ -132,7 +132,7 @@ function fakeCars() {
             }
         });
     })
-    console.log("Done creating fake manufacturers!");
+    console.log("Done creating fake cars!");
 }
 
 function fakeMessages() {
@@ -187,4 +187,5 @@ function fakeBookings() {
         });
     })
     console.log("Done creating fake bookings!");
+    console.log("Press ctrl + c to exit....");
 }
