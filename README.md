@@ -108,12 +108,8 @@ to start the server simply run
 node server.js
 ```
 
-to generate dummy datas run
+to generate dummy data run
 
 ```sh
 node generateFakeData.js
 ```
-
-to get the dummy image files
-
-(Click to Image Zip)[]
