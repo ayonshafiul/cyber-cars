@@ -101,6 +101,11 @@ CREATE TABLE admins (
     Primary Key(email)
 );
 ```
+to generate dummy data run
+
+```sh
+node generateFakeData.js
+```
 
 to start the server simply run
 
@@ -108,8 +113,5 @@ to start the server simply run
 node server.js
 ```
 
-to generate dummy data run
-
-```sh
-node generateFakeData.js
-```
+# Demo
+![Project-demo](https://github.com/ayonshafiul/cse370project/raw/main/public/img/project-demo.gif)
