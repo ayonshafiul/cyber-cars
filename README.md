@@ -101,6 +101,11 @@ CREATE TABLE admins (
     Primary Key(email)
 );
 ```
+install dependencies 
+```sh
+npm install
+```
+
 to generate dummy data run
 
 ```sh
