@@ -1,6 +1,7 @@
 # cse370project
 
 ![Project-demo](https://github.com/ayonshafiul/cse370project/raw/main/public/img/project-demo.gif)
+
 A simple online car showroom project built using nodejs and mysql database
 
 
