@@ -4,7 +4,7 @@ CREATE TABLE users (
     email varchar(50),
     password varchar(255),
     address varchar(255),
-    phoneNumber varchar(20),
+    phoneNumber varchar(40),
     creditCard varchar(100),
     Primary Key(userID)
 );
@@ -12,7 +12,7 @@ CREATE TABLE users (
 CREATE TABLE manufacturers(
     manufacturerID int AUTO_INCREMENT,
     name varchar(20),
-    country varchar(20),
+    country varchar(50),
     Primary Key(manufacturerID)
 );
 

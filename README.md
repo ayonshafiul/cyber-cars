@@ -19,8 +19,11 @@ JWTADMIN_EXPIRES_IN = 90d
 JWTADMIN_COOKIE_EXPIRES = 90
 ```
 By default the mysql database name is car_showroom
+
 create the database using phpmyadmin or mysql client 
+
 populate the database with required tables using contents from the sqlTables
+
 or simply copy the following code from below
 
 ```sh
@@ -30,7 +33,7 @@ CREATE TABLE users (
     email varchar(50),
     password varchar(255),
     address varchar(255),
-    phoneNumber varchar(20),
+    phoneNumber varchar(40),
     creditCard varchar(100),
     Primary Key(userID)
 );
@@ -38,7 +41,7 @@ CREATE TABLE users (
 CREATE TABLE manufacturers(
     manufacturerID int AUTO_INCREMENT,
     name varchar(20),
-    country varchar(20),
+    country varchar(50),
     Primary Key(manufacturerID)
 );
 
@@ -104,3 +107,13 @@ to start the server simply run
 ```sh
 node server.js
 ```
+
+to generate dummy datas run
+
+```sh
+node generateFakeData.js
+```
+
+to get the dummy image files
+
+(Click to Image Zip)[]
